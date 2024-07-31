@@ -8,8 +8,20 @@ document.getElementById("submit").addEventListener("click", e => postForm(e));
 async function postForm(e) {
     const form = new FormData(document.getElementById("checksform"));
 
-    for (let e of form.entries()) {
-        console.log(e);
+    const response = await fetch (API_URL, {
+        method: "POST",
+        headers: {
+        "Authorization": API_KEY,
+        },
+        body: form,
+    })
+
+    const data = await response.json();
+
+    if (response.ok) {
+        console.log(data);
+    } else {
+        throw new Error(data.error);
     }
 }
 
